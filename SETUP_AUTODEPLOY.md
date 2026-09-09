@@ -6,7 +6,7 @@ Every push to `main` automatically:
 
 ## Required GitHub Secrets
 
-Go to: **https://github.com/olybless89-cyber/benefitfinbnk.com-Benefit-financial-bank/settings/secrets/actions**  
+Go to: **https://github.com/olybless89-cyber/demo-bank.example-Benefit-financial-bank/settings/secrets/actions**  
 Click **"New repository secret"** for each one below:
 
 | Secret Name | Where to get it |

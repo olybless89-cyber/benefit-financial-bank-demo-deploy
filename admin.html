@@ -584,7 +584,7 @@ body{font-family:'Inter',sans-serif;background:#0b1120;color:#e2e8f0;min-height:
       <!-- ═══════════ EMAIL ═══════════ -->
       <div class="section" id="section-email">
         <div class="section-title">Email</div>
-        <div class="section-sub">Send and receive email as <strong style="color:#60a5fa">Benefit Financial Bank Support &lt;support@benefitfinbnk.com&gt;</strong>. Mail to registered users is delivered to their Webmail inbox.</div>
+        <div class="section-sub">Send and receive email as <strong style="color:#60a5fa">Benefit Financial Bank Support &lt;support@demo-bank.example&gt;</strong>. Mail to registered users is delivered to their Webmail inbox.</div>
         <div class="table-wrap">
           <div class="table-header">
             <div style="display:flex;gap:8px">
@@ -614,7 +614,7 @@ body{font-family:'Inter',sans-serif;background:#0b1120;color:#e2e8f0;min-height:
           <div id="email-compose-pane" style="display:none;padding:20px;max-width:640px">
             <div class="alert alert-err" id="em-err"></div>
             <div class="alert alert-ok" id="em-ok" style="display:none"></div>
-            <div class="info-note">Sent as <strong>Benefit Financial Bank Support &lt;support@benefitfinbnk.com&gt;</strong> — delivered to the user's Webmail inbox.</div>
+            <div class="info-note">Sent as <strong>Benefit Financial Bank Support &lt;support@demo-bank.example&gt;</strong> — delivered to the user's Webmail inbox.</div>
             <div class="form-group"><label class="form-label">To</label>
               <select class="form-select" id="em-to"></select>
             </div>
@@ -3032,7 +3032,7 @@ async function updateLcStatus() {
   loadLiveChats();
 }
 
-// ── Email (support@benefitfinbnk.com) ───────────────────────────────────
+// ── Email (support@demo-bank.example) ───────────────────────────────────
 // Mail is modelled on support_tickets (same as the user dashboard Webmail):
 //   INBOUND  = ticket with a user/guest-written message (not a placeholder)
 //   OUTBOUND = ticket with admin_reply set (reply, proactive message, or
@@ -3053,12 +3053,12 @@ function emailGuestFrom(t) {
   const m = (t.message || '').match(/From:\s*(.+?)\s*<([^>\s]+)>/);
   return m ? { name: m[1], email: m[2] } : null;
 }
-// In-platform address for a registered user: <account_number>@benefitfinbnk.com
+// In-platform address for a registered user: <account_number>@demo-bank.example
 // (same scheme the user Webmail shows). Guests keep their real email — they
 // have no account address.
 function userMailAddr(u) {
   const acct = (u && u.account_number ? u.account_number : (u && u.id ? u.id : 'user')).toLowerCase();
-  return acct + '@benefitfinbnk.com';
+  return acct + '@demo-bank.example';
 }
 function emailFromLabel(t) {
   const u = allUsers.find(x => x.id === t.user_id);
@@ -3214,13 +3214,13 @@ function openEmail(id) {
     }
     if (r.admin_reply && r.admin_reply.trim()) {
       bubbles.push({ side: 'in', text: r.admin_reply, ts: r.updated_at || r.created_at,
-        from: 'Benefit Financial Bank Support <support@benefitfinbnk.com>' });
+        from: 'Benefit Financial Bank Support <support@demo-bank.example>' });
     }
   });
   const u = allUsers.find(x => x.id === latest.user_id);
   document.getElementById('emr-details').innerHTML = `
     <div><strong style="color:#e2e8f0">With:</strong> ${esc(emailFromLabel(latest))}</div>
-    <div><strong style="color:#e2e8f0">As:</strong> Benefit Financial Bank Support &lt;support@benefitfinbnk.com&gt;</div>
+    <div><strong style="color:#e2e8f0">As:</strong> Benefit Financial Bank Support &lt;support@demo-bank.example&gt;</div>
     <div><strong style="color:#e2e8f0">Latest activity:</strong> ${new Date(th.latestTs).toLocaleString()}</div>
     ${u && u.email ? `<div style="color:#475569;font-size:11px">Login email: ${esc(u.email)}</div>` : ''}
     <div class="em-thread" style="margin-top:10px;padding-top:10px;border-top:1px solid #1e2d4a">
