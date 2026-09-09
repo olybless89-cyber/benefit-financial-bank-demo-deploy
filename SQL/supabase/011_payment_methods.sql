@@ -56,7 +56,7 @@ begin
   values
     ('bitcoin', true, '', 'Bitcoin (BTC) Mainnet',
      null, null, null, null, null, null, null, null,
-     'Demo only: replace this placeholder with a real BTC address in the admin panel before enabling Bitcoin.'),
+     'Configure the destination BTC wallet address in the admin panel before enabling Bitcoin.'),
     ('bank_transfer', true, null, null,
      'Benefit International Bank', 'Benefit Financial Bank Operations', '482100017788',
      'BFBBUS33', 'GB29NWBK60161331926819', '1 Threadneedle Street, London, EC2R 8AH, United Kingdom', 'USD', null,
