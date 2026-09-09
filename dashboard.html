@@ -1278,7 +1278,7 @@ var depChipActive = null;
 
 let DEP_METHOD_INFO = {}; // id -> method row loaded from the DB; fallbacks below only fill gaps for a method missing from the response
 const DEP_FALLBACK = {
-  bank_transfer: { bank_name: 'Benefit International Bank', account_name: 'Benefit Financial Bank Operations', swift_bic: 'BFBBUS33', iban: 'GB29NWBK60161331926819', instructions: 'Please include your wallet address as the transfer reference. Funds are credited within  ́1–́3 business days after admin approval.' },
+  bank_transfer: { bank_name: 'Demo Bank (fictional)', account_name: 'Demo Account Name', swift_bic: null, iban: null, instructions: 'Demo only: configure real bank-transfer details in the admin panel before enabling this method.' },
   paypal: { paypal_email: 'deposits@demo-bank.example', instructions: 'Send your payment via PayPal to the address above, then click ""Continue to Deposit"" to submit your request. Include your Benefit Financial Bank wallet address in the PayPal note. PayPal deposits are reviewed within  ́24 hours.' },
   bitcoin: { wallet_address: '', network: 'Bitcoin (BTC) Mainnet', instructions: 'Demo only: no real crypto address is shown. If an admin enables Bitcoin, they configure the destination wallet in the Admin Deposit Payment Methods panel.' }
 };
