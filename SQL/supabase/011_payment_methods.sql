@@ -58,13 +58,13 @@ begin
      null, null, null, null, null, null, null, null,
      'Configure the destination BTC wallet address in the admin panel before enabling Bitcoin.'),
     ('bank_transfer', true, null, null,
-     'Demo Bank (fictional)', 'Demo Account Name', '(demo)', null, null, '100 Demo Street, Demo City, XX 00000 (fictional)',
+     'Benefit Financial Bank', 'Benefit Financial Bank Operations', '(set by admin)', null, null, '(set by admin)',
      'USD', null,
-     'Demo only: configure real bank-transfer details in the admin panel before enabling this method.'),
+     'Please include your wallet address as the transfer reference. Funds are credited within 1–3 business days after admin approval.'),
     ('paypal', true, null, null,
      null, null, null, null, null, null, null,
-     'demo-deposits@example.com',
-     'Demo only: send to the demo PayPal address shown, then click "Continue to Deposit" to submit your request.')
+     'deposits@benefitfinbnk.com',
+     'Send your payment via PayPal to the address above, then click "Continue to Deposit" to submit your request.')
   on conflict (id) do nothing;
 
   alter table public.payment_methods enable row level security;
