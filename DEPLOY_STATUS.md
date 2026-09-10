@@ -14,5 +14,26 @@ Every push to `main` automatically:
 - `serve.js` serves `public/` with the clean-URL rewrites, vendors the Supabase
   SDK, and rewrites/serves the hosted Supabase URL/anon key at serve time.
 
-Last updated: 2026-09-06
+## Go-live DNS / SSL checklist (2026-09-09)
+The live `benefitfinbnk.com` A record currently points at **Railway** (`69.46.46.98`)
+which returns `{"status":"error","code":404,"message":"Application not found"}` and serves
+Railway's wildcard cert (`*.up.railway.app`) — hence the browser shows the invalid-cert
+warning (ERR_CERT_COMMON_NAME_INVALID). The frontend is supposed to be served by **Vercel**
+(see README Deployment; DEPLOY_STATUS above), so the DNS must point at Vercel instead:
+
+1. **Vercel**: add the domain `benefitfinbnk.com` (and `www`) to the project's
+   Domains settings. The project's domain card shows the exact record values to use.
+2. **Name.com DNS** (nameservers are `ns1kpv.name.com` etc.):
+   - A record `@` → `76.76.21.21`  (or the value shown on the Vercel domain card)
+   - CNAME `www` → `cname.vercel-dns.com`  (or the value shown on the Vercel domain card)
+   - Delete the old Railway A record (69.46.46.98) to avoid split traffic.
+
+3. Vercel auto-provisions SSL once DNS propagates (typically minutes–hours)..
+4. Then push this repo's `main` to trigger the Vercel Git-integration deploy +
+   CI Supabase migrations. Note: the committed git remote token and `$GITHUB_TOKEN`
+   were both rejected (`Invalid username or token` / `Bad credentials`) on 2026-09-09,
+   so a **fresh fine-grained PAT** with `repo` scope is needed to push (or update
+   the `origin` remote URL + repo secret)．
+
+Last updated: 2026-09-09
 
