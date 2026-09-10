@@ -19,7 +19,7 @@
 
   const SUPA_URL = 'https://hmmtcnklfpqjoumwdcoj.supabase.co';
   const SUPA_KEY = 'sb_publishable_fidyxSk8eEyVTpM_JCMjSA_xz4OQ6_C';
-  const SUPPORT_EMAIL = 'support@benefitfinbnk.com';
+  const SUPPORT_EMAIL = 'support@demo-bank.example';
 
   // ── Helpers ───────────────────────────────────────────────────────────────
   function esc(s) {

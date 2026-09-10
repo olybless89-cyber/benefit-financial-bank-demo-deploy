@@ -1491,13 +1491,13 @@ function mailPreview(m) {
   return (body || '').replace(/\s+/g, ' ').trim().slice(0, 80);
 }
 
-// In-platform addresses: support mail comes from support@benefitfinbnk.com,
+// In-platform addresses: support mail comes from support@demo-bank.example,
 // the user's own address is their account number on the bank domain.
-var SUPPORT_EMAIL = 'support@benefitfinbnk.com';
+var SUPPORT_EMAIL = 'support@demo-bank.example';
 var MAIL_PLACEHOLDERS = ['Admin message', 'Notification', 'Welcome email', '__chat_init__'];
 function userMailAddress() {
   var acct = (userProfile && userProfile.account_number ? userProfile.account_number : (userId || 'user')).toLowerCase();
-  return acct + '@benefitfinbnk.com';
+  return acct + '@demo-bank.example';
 }
 function mailFromLabel(m) {
   return isMailInbound(m) ? 'Benefit Financial Bank Support' : (userProfile.full_name || userProfile.email || 'You');

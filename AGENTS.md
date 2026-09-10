@@ -1,4 +1,4 @@
-# AGENTS.md ‚Äî Benefit Financial Bank (benefitfinbnk.com)
+# AGENTS.md ‚Äî Benefit Financial Bank (demo-bank.example)
 
 ## What this project actually is
 A **static HTML/JS** banking demo site. Despite shipping Laravel-style scaffolding
@@ -65,7 +65,7 @@ local anon key `<SUPA_LOCAL_ANON_KEY>` (JWT ref `supabase-demo`), API at `127.0.
 The live schema (tables, RLS, RPCs, the digit-free `handle_new_user` trigger)
 must be applied to the local DB from `SQL/supabase/002_full_app_schema.sql`
 and `SQL/supabase/003_fix_review_rpc_note_ambiguity_and_digit_free_account.sql`.
-Admin seed user: `admin@benefitfinbnk.com` (set `profiles.role='admin'`).
+Admin seed user: `admin@demo-bank.example` (set `profiles.role='admin'`).
 Verified live in-browser against the self-hosted stack: register, login,
 admin dashboard + All Users (no ambiguous-role error), deposit submit.
 
@@ -239,7 +239,7 @@ authoritative, standalone redefinition of the admin user-management RPCs:
 - `admin_set_user_status(target_id uuid, new_status text)` ‚Äî `SECURITY
   DEFINER` (bypasses RLS so admins can activate/deactivate any user), with
   admin-only guard + a self-status-change block (errcode 44000).
-- Ensures `admin@benefitfinbnk.com` has `role='admin'`.
+- Ensures `admin@demo-bank.example` has `role='admin'`.
 Verified live in-browser: All Users lists every user (no RLS banner), and the
 toggle status button flips users active‚Üîinactive through the RPC.
 
@@ -317,7 +317,7 @@ expected 22023 validation error proves existence).
     same) ‚Äî the old code re-pushed it on every UPDATE.
 
 ## Support email + live chat everywhere + admin Email section (009) ‚Äî 2026-08-23
-- **Support email identity** is `support@benefitfinbnk.com`. It is shown on
+- **Support email identity** is `support@demo-bank.example`. It is shown on
   /contact (Email Us card + footer, replacing a stray old template email
   leftover) and in the chat widget's guest form.
 - **Chat widget is now on every public page**: it was missing from
@@ -358,8 +358,8 @@ expected 22023 validation error proves existence).
 
 ## Webmail polish (threading + internal addresses + arrival polling) ‚Äî 2026-08-23
 - **Internal addresses**: support mail displays as
-  `Benefit Financial Bank Support <support@benefitfinbnk.com>`; a registered user's
-  address is `<account_number lowercase>@benefitfinbnk.com`
+  `Benefit Financial Bank Support <support@demo-bank.example>`; a registered user's
+  address is `<account_number lowercase>@demo-bank.example`
   (`userMailAddress()` in dashboard.html, `userMailAddr()` in admin.html).
   Guests keep their real email. Purely presentational ‚Äî no SMTP involved.
 - **Threading** (both dashboard Webmail and admin Email section): messages
@@ -420,7 +420,7 @@ verified working against the live project this way.
   registered). Supabase's `recover` endpoint accepted it live (200 `{}`;
   the email delivery depends on the project's Auth > SMTP email settings being
   enabled — that is a Supabase dashboard config, out of band. The recovery
-  link redirect URL `https://benefitfinbnk.com/reset-password` must be added to
+  link redirect URL `https://demo-bank.example/reset-password` must be added to
   the project's Auth > URL Configuration > Redirect URLs allow-list.
 
 - **Reset-password page**: `reset-password.html` (+ `public/` mirror） creates
@@ -462,7 +462,7 @@ this repo, so they cannot be verified or fixed from here):
    never arrives."
 2. **Supabase Dashboard → Auth → URL Configuration → Redirect URLs**: must
    contain the *exact* origin the recovery link redirects to
-   (`https://benefitfinbnk.com/reset-password`, plus any other domain the
+   (`https://demo-bank.example/reset-password`, plus any other domain the
    site is actually reachable at — see below). If the redirect isn't
    allow-listed, GoTrue silently falls back to the project's default
    `SITE_URL` instead of rejecting the request, so the email still sends but
@@ -470,9 +470,9 @@ this repo, so they cannot be verified or fixed from here):
    work" from the user's side.
 3. **Domain/TLS**: `DEPLOY_STATUS.md` documents the custom domain as a
    target for *both* Vercel (Git integration) and Railway (`serve.js`,
-   2026-09-06) at once. A direct fetch of `https://benefitfinbnk.com/`
+   2026-09-06) at once. A direct fetch of `https://demo-bank.example/`
    returned `certificate verify failed: Hostname mismatch, certificate is
-   not valid for 'benefitfinbnk.com'` on at least one request — consistent
+   not valid for 'demo-bank.example'` on at least one request — consistent
    with the custom domain's DNS/TLS not being fully/consistently provisioned
    for whichever host is actually supposed to be live. If that's
    intermittent, some visitors (including ones clicking the reset-password

@@ -1,6 +1,6 @@
 # Benefit Financial Bank
 
-**benefitfinbnk.com** — a static HTML/JS digital banking application backed by
+**demo-bank.example** — a static HTML/JS digital banking application backed by
 **Supabase**. This repository is an independent rebrand of the source
 banking template, fully rebranded as **Benefit Financial Bank**.
 
@@ -47,8 +47,8 @@ webmail, admin management).
 Requires PHP 8+ (router.php) or Node 18+ (serve.js).
 
 ```bash
-git clone https://github.com/olybless89-cyber/benefitfinbnk.com-Benefit-financial-bank.git
-cd benefitfinbnk.com-Benefit-financial-bank
+git clone https://github.com/olybless89-cyber/benefit-financial-bank-demo-deploy.git
+cd demo-bank.example-Benefit-financial-bank
 
 # Option A — PHP built-in server
 php -S 0.0.0.0:12000 -t public public/router.php
@@ -136,7 +136,7 @@ No minification or bundling is required; ensure the CDN-fetched
 2. Import the repo into **Vercel** (use the directory `public/`; framework
    preset: Other). Vercel's `vercel.json` clean-URL rewrites map `/login` ->
    `/login.html`, `/admin/*` -> `/admin.html`, etc..
-3. Point your domain `benefitfinbnk.com` at the Vercel deployment..
+3. Point your domain `demo-bank.example` at the Vercel deployment..
 4. Supabase migrations auto-run on push via GitHub Actions (if the
    `SUPABASE_ACCESS_TOKEN` / `SUPABASE_PROJECT_REF` Action secrets are set)..
 
@@ -159,7 +159,7 @@ No minification or bundling is required; ensure the CDN-fetched
 | Supabase (Postgres + Auth) | database,, auth,, RPCs, Edge Function (register) | `SUPA_URL` / `SUPA_KEY` placeholders; SQL migrations in `SQL/supabase/` |
 | Supabase register Edge Function | mints 10-digit account numbers on signup; owners project | `https://<PROJECT_REF>.supabase.co/functions/v1/register` (in `register.html`) |
 | Vercel | hoststhe static frontend + clean-URL rewrites | `vercel.json`, `public/` |
-| email (optional) | contact/webmail are in-app only —no SMTP used | support@benefitfinbnk.com display addresses |
+| email (optional) | contact/webmail are in-app only —no SMTP used | support@demo-bank.example display addresses |
 
 No payment gateways, SMS providers,, analytics,, or file storage services are
 used by this codebase; deposit/withdrawal flows are admin-reviewed workflows with
@@ -168,17 +168,17 @@ the in-app bank-transfer / PayPal / Bitcoin details), not live payment SDKs..
 ## Admin setup procedure
 
 1. Create the admin user via Supabase Auth (email e.g
-   `admin@benefitfinbnk.com`)or seed directly:
+   `admin@demo-bank.example`)or seed directly:
    ```sql
    -- in the Supabase SQL editor:
    insert into auth.users (id, email, raw_user_meta_data, encrypted_password)
-   values (gen_random_uuid(),'admin@benefitfinbnk.com','{"full_name":"Administrator"}', crypt('change-me', gen_salt('bf'));;
+   values (gen_random_uuid(),'admin@demo-bank.example','{"full_name":"Administrator"}', crypt('change-me', gen_salt('bf'));;
    insert into public.profiles (id, email, full_name, role, status, account_number)
    select id, email, coalesce(raw_user_meta_data->>'full_name',''), 'admin', 'active', '0000000001'
-   from auth.users where email = 'admin@benefitfinbnk.com';;
+   from auth.users where email = 'admin@demo-bank.example';;
    ```
 2. The migration `005` also auto-promotes any profile with email
-   `admin@benefitfinbnk.com` to `role='admin'` on every apply..
+   `admin@demo-bank.example` to `role='admin'` on every apply..
 3. Login at `/admin-login` (or `/login` with that email).. Role routing sends
    admins to `/admin`, users to `/dashboard`..
 
