@@ -1,4 +1,4 @@
-# AGENTS.md ‚Äî Benefit Financial Bank (demo-bank.example)
+# AGENTS.md ‚Äî Benefit Financial Bank (benefitfinbnk.com)
 
 ## What this project actually is
 A **static HTML/JS** banking demo site. Despite shipping Laravel-style scaffolding
@@ -573,3 +573,12 @@ proxy is still fully wired and becomes active only when `SUPABASE_API_URL` is se
 wrong-creds login POST -> `400 {"code":400,"error_code":"invalid_credentials","msg":
 "Invalid login credentials"}` with `access-control-allow-origin` echoing the request
 Origin.
+## NEW Supabase project provisioned + data migration (2026-09-10）
+- New project ref: `xmeoizeehinvsmxcwusl` (host: `https://xmeoizeehinvsmxcwusl.supabase.co`）, old ref stayed `hmmtcnklfpqjoumwdcoj`.
+- Anon JWT (legacy form, used by pages): ends `...0jTwQ0` — NOTE the user pasted a copy missing the trailing `0` (`...TwQ`), which broke the JWT signature (`Invalid API key`）。 The Management API returns int full;when switching runtime files copy FULL key。
+- New `sb_publishable_...` key (also listed by API as `default`): `sb_publishable_vdmJ2YVRkIfFGXBcWcjPWg_4E28NN58`.
+- The Management API access token for the NEW project was used this session: `sbp_...` — scope covers ONLY the NEW project (`api.supabase.com/v1/projects` lists just it`;OLD not visible）。
+- **All 15 migrations applied to NEW via `POST /v1/projects/{ref}/database/query`** — 001,002,003,004,005,006,007,008,009,011,013,014,015,017,018, each 201. Full schema live: 8 public tables + RLS + SECURITY DEFINER RPCs + signup trigger + seeded admin/payment_methods (defaults incl `deposits@benefitfinbnk.com`)。 Verified: anon REST `profiles` → `[]`;anon `get_active_payment_methods` → 3 seeded rows。
+- **Gotcha (critical)**: the Management API's `database/query` rejects the default `Python-urllib` User-Agent → `403 error code 1010`。 Forcing `User-Agent: curl/8.5.0` in urllib works (201/200)。 curl itself is unaffected。
+- **Old→NEW data+auth copy PENDING**: requires OLD project's DB connection URI (role postgres) or OLD project's personal access token — current token can't see OLD. Until then, new project has schema+seeds but NO users/data。
+- **Switch runtime to NEW** (after data copy): replace old ref + old anon keys with new ones across root + `public/` copies + `serve.js` + `.github/workflows/deploy.yml` sanity checks,in BOTH repos (this one + `benefitfinbnk.com-Benefit-financial-bank`);update GH Actions secrets (`SUPABASE_PROJECT_REF`, `SUPABASE_ACCESS_TOKEN` to a token for NEW);re-deploy the register Edge Function against NEW（it lives outside this repo, with its own service-role env）;then verify existing users/admin log in with old passwords。
